@@ -1,0 +1,4 @@
+com\roy\SCApplication.class
+com\roy\util\MessageSender.class
+com\roy\springcloudstream\SendMessageController.class
+com\roy\consumer\MessageReceiver.class
