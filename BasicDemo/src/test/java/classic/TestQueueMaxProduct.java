@@ -1,3 +1,5 @@
+package classic;
+
 import com.rabbitmq.client.*;
 import com.roy.rabbitmq.Message;
 import com.roy.rabbitmq.RabbitMQUtil;
@@ -21,12 +23,15 @@ public class TestQueueMaxProduct {
 
         channel.confirmSelect();
         channel.addConfirmListener(new ConfirmListener() {
+
+            //发送成功回调
             @Override
             public void handleAck(long deliveryTag, boolean multiple) throws IOException {
                 /* deliveryTag 信道channel内是唯一的，deliveryTag 仅在当前信道有效，信道关闭后不再有意义*/
                 System.out.println("handleAck="+deliveryTag);
             }
 
+            //发送失败回调
             @Override
             public void handleNack(long deliveryTag, boolean multiple) throws IOException {
                 System.out.println("handleNack="+deliveryTag);
@@ -36,8 +41,8 @@ public class TestQueueMaxProduct {
 
 
         Map<String, Object> queueParams = new HashMap<>();
-        queueParams.put("x-max-length",3);
-        queueParams.put("x-overflow","reject-publish");
+        queueParams.put("x-max-length",20);
+        queueParams.put("x-overflow","reject-publish");/* 超过队列长度策略，拒绝插入。默认丢弃旧消息 */
         channel.queueDeclare("queue-max",true,false,false,queueParams);
         for (int i = 0; i < 10; i++) {
             AMQP.BasicProperties props = new AMQP.BasicProperties();
