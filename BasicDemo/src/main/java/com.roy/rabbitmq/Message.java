@@ -1,5 +1,7 @@
 package com.roy.rabbitmq;
 
+import java.util.UUID;
+
 /**
  * @author chenxuegui
  * @since 2025/3/20
@@ -8,8 +10,9 @@ public class Message {
 
     private String data;
 
-    private long time = System.currentTimeMillis();
+    private String id = UUID.randomUUID().toString();
 
+    private long time = System.currentTimeMillis();
     public Message(String data) {
         this.data = data;
     }
@@ -18,6 +21,7 @@ public class Message {
     public String toString() {
         return "Message{" +
                 "data='" + data + '\'' +
+                ", id='" + id + '\'' +
                 ", time=" + time +
                 '}';
     }
