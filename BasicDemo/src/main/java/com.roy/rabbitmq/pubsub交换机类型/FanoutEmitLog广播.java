@@ -1,10 +1,10 @@
-package com.roy.rabbitmq.pubsub;
+package com.roy.rabbitmq.pubsub交换机类型;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.roy.rabbitmq.RabbitMQUtil;
 
-public class EmitLogFanout {
+public class FanoutEmitLog广播 {
 
 	private static final String EXCHANGE_NAME = "fanoutExchange";
 	/**
@@ -17,7 +17,7 @@ public class EmitLogFanout {
 		Connection connection = RabbitMQUtil.getConnection();
 		Channel channel = connection.createChannel();
 		//发送者只管往exchange里发消息，而不用关心具体发到哪些queue里。
-		channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
+		channel.exchangeDeclare(EXCHANGE_NAME, "fanout"); /* 交换机上所有队列， --> 相当于广播 */
 		String message = "LOG INFO 222";
 		channel.basicPublish(EXCHANGE_NAME, "", null, message.getBytes());
 		

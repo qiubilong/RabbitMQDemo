@@ -1,4 +1,4 @@
-package com.roy.rabbitmq.pubsub;
+package com.roy.rabbitmq.pubsub交换机类型;
 
 import java.io.IOException;
 
@@ -6,7 +6,7 @@ import com.rabbitmq.client.*;
 import com.rabbitmq.client.AMQP.BasicProperties;
 import com.roy.rabbitmq.RabbitMQUtil;
 
-public class ReceiveLogsDirect {
+public class DirectReceiveLogs {
 
     private static final String EXCHANGE_NAME = "directExchange";
 
@@ -19,6 +19,7 @@ public class ReceiveLogsDirect {
         String queueName="direct_queue";
         channel.queueDeclare(queueName,false,false,false,null);
 
+        /* 使用routingKey绑定 交换机和队列 */
         channel.queueBind(queueName, EXCHANGE_NAME, "info");
         channel.queueBind(queueName, EXCHANGE_NAME, "debug");
 

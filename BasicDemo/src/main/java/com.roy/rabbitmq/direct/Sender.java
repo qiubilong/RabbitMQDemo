@@ -15,10 +15,12 @@ public class Sender {
 		Channel channel = connection.createChannel();
 		//声明队列会在服务端自动创建。
 		channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+
 		//声明Quorum队列的方式就是添加一个x-queue-type参数，指定为quorum。默认是classic
 //		Map<String,Object> params = new HashMap<>();
 //		params.put("x-queue-type","quorum");
 //		channel.queueDeclare(QUEUE_NAME, true, false, false, params);
+
 		//声明Stream队列的方式。
 //		params.put("x-queue-type","stream");
 //		params.put("x-max-length-bytes", 20_000_000_000L); // maximum stream size: 20 GB
@@ -32,9 +34,9 @@ public class Sender {
 		builder.priority(MessageProperties.PERSISTENT_TEXT_PLAIN.getPriority());
 		//携带消息ID
 		builder.messageId(""+channel.getNextPublishSeqNo());
+
 		Map<String, Object> headers = new HashMap<>();
-		//携带订单号
-		headers.put("order", "123");
+		headers.put("order", "123");//携带订单号
 		builder.headers(headers);
 
 		channel.basicPublish("", QUEUE_NAME, builder.build(), message.getBytes("UTF-8"));

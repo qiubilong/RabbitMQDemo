@@ -1,4 +1,4 @@
-package com.roy.rabbitmq.federation;
+package com.roy.rabbitmq.federation主从复制;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;

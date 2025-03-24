@@ -1,4 +1,4 @@
-package com.roy.rabbitmq.task;
+package com.roy.rabbitmq.task多个消费者;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;

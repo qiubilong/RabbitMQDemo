@@ -1,16 +1,12 @@
-package com.roy.rabbitmq.pubsub;
+package com.roy.rabbitmq.pubsub交换机类型;
+
+import com.rabbitmq.client.AMQP.BasicProperties;
+import com.rabbitmq.client.*;
+import com.roy.rabbitmq.RabbitMQUtil;
 
 import java.io.IOException;
 
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.Consumer;
-import com.rabbitmq.client.DefaultConsumer;
-import com.rabbitmq.client.Envelope;
-import com.rabbitmq.client.AMQP.BasicProperties;
-import com.roy.rabbitmq.RabbitMQUtil;
-
-public class ReceiveLogsFanout {
+public class FanoutReceiveLogs1 {
 
 	private static final String EXCHANGE_NAME = "fanoutExchange";
 
@@ -19,8 +15,9 @@ public class ReceiveLogsFanout {
 		Channel channel = connection.createChannel();
 		
 	    channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
-	    String queueName = channel.queueDeclare().getQueue();
+	    String queueName = channel.queueDeclare().getQueue();/* 生成临时独占队列，关闭连接后删除*/
 		System.out.println(queueName);
+		//绑定队列
 	    channel.queueBind(queueName, EXCHANGE_NAME, "");
 
 		Consumer myconsumer = new DefaultConsumer(channel) {

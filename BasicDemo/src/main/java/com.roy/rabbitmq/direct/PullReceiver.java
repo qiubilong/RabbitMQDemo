@@ -22,6 +22,7 @@ public class PullReceiver {
 
 		channel.basicQos(100);
 		Map<String,Object> params = new HashMap<>();
+
 		//声明Quorum队列的方式就是添加一个x-queue-type参数，指定为quorum。默认是classic
 //		params.put("x-queue-type","quorum");
 		//队列的声明方式必须保持一致

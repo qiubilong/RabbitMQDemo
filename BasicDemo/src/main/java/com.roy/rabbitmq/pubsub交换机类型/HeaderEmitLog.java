@@ -1,4 +1,4 @@
-package com.roy.rabbitmq.pubsub;
+package com.roy.rabbitmq.pubsub交换机类型;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.MessageProperties;
 import com.roy.rabbitmq.RabbitMQUtil;
 
-public class EmitLogHeader {
+public class HeaderEmitLog {
 
 	private static final String EXCHANGE_NAME = "logs";
 	/**
@@ -40,7 +40,7 @@ public class EmitLogHeader {
 		AMQP.BasicProperties.Builder builder = new AMQP.BasicProperties.Builder(); 
 		builder.deliveryMode(MessageProperties.PERSISTENT_TEXT_PLAIN.getDeliveryMode());
 		builder.priority(MessageProperties.PERSISTENT_TEXT_PLAIN.getPriority());
-		builder.headers(headers);
+		builder.headers(headers);/* 头部参数 */
 
 		channel.basicPublish(EXCHANGE_NAME, routingKey, builder.build(), message.getBytes("UTF-8"));
 

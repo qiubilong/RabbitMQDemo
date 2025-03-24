@@ -1,17 +1,12 @@
-package com.roy.rabbitmq.pubsub;
+package com.roy.rabbitmq.pubsub交换机类型;
+
+import com.rabbitmq.client.AMQP.BasicProperties;
+import com.rabbitmq.client.*;
+import com.roy.rabbitmq.RabbitMQUtil;
 
 import java.io.IOException;
 
-import com.rabbitmq.client.BuiltinExchangeType;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.Consumer;
-import com.rabbitmq.client.DefaultConsumer;
-import com.rabbitmq.client.Envelope;
-import com.rabbitmq.client.AMQP.BasicProperties;
-import com.roy.rabbitmq.RabbitMQUtil;
-
-public class ReceiveLogsTopic {
+public class TopicReceiveLogs1 {
 
 	//一个exchange只能是一个类型
 	private static final String EXCHANGE_NAME = "topicExchange";
@@ -21,11 +16,12 @@ public class ReceiveLogsTopic {
 		Channel channel = connection.createChannel();
 		
 	    channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.TOPIC);
-	    String queueName = channel.queueDeclare().getQueue();
+	    String queueName = channel.queueDeclare().getQueue();//生成临时独占队列
+
 	    //topic的routingkey，*代表一个具体的单词，#代表0个或多个单词。
 	    channel.queueBind(queueName, EXCHANGE_NAME, "*.info");
-	    channel.queueBind(queueName, EXCHANGE_NAME, "#.debug");
-	    
+	    //channel.queueBind(queueName, EXCHANGE_NAME, "#.debug");
+
 		Consumer myconsumer = new DefaultConsumer(channel) {
 			@Override
 			public void handleDelivery(String consumerTag, Envelope envelope,
