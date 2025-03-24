@@ -19,7 +19,7 @@ public class DirectReceiver {
 	
 	//直连模式的多个消费者，会分到其中一个消费者进行消费。类似task模式
 	//通过注入RabbitContainerFactory对象，来设置一些属性，相当于task里的channel.basicQos
-	@RabbitListener(queues=MyConstants.QUEUE_DIRECT,containerFactory="qos_4")
+	@RabbitListener(queues=MyConstants.QUEUE_DIRECT,containerFactory="qos_4") /* 手动ack */
 	public void directReceive22(Message message, Channel channel, String messageStr) {
 		System.out.println("consumer1 received message : " +messageStr);
 	}
@@ -27,6 +27,7 @@ public class DirectReceiver {
 	@RabbitListener(queues=MyConstants.QUEUE_DIRECT)
 	public void directReceive2(String message) {
 		System.out.println("consumer2 received message : " +message);
+		throw new NullPointerException(); /* spring框架下的自动确认机制，当消费者有异常时，会重新投递消息。跟原生rabbitmq客户端api实现不同 */
 	}
 	//fanout模式接收还是只指定队列
 	@RabbitListener(queues=MyConstants.QUEUE_FANOUT_Q1)

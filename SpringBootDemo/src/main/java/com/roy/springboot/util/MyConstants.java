@@ -23,6 +23,7 @@ public class MyConstants {
     public static final String QUEUE_TOPIC2 = "hunan.IT";
     public static final String QUEUE_TOPIC3 = "hebei.eco";
     public static final String QUEUE_TOPIC4 = "hebei.IT";
+
     //header模式
     public static final String EXCHANGE_HEADER = "headerExchange";
     public static final String QUEUE_TXTYP1 = "txTyp1";
