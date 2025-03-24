@@ -27,7 +27,7 @@ public class TestQuorumQueueProductor {
         queueParams.put("x-delivery-limit",3);/* 处理失败时，额外重新入队次数 -->防止重新消费死循环 */
         channel.queueDeclare(queue,true,false,false,queueParams);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
 
             String message = new Message("gg"+i).toString();
             //无交换机填"", routingKey=队列名

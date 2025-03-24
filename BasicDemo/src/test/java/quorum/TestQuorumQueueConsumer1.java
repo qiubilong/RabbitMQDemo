@@ -17,7 +17,7 @@ public class TestQuorumQueueConsumer1 {
         Channel channel = connection.createChannel();
 
         channel.basicQos(1);//预处理能力
-        channel.basicConsume(queue,false,new DefaultConsumer(channel){
+        channel.basicConsume(queue,false,new DefaultConsumer(channel){ /* 手动ACK -->消息至少消费一次 */
 
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
@@ -30,10 +30,10 @@ public class TestQuorumQueueConsumer1 {
                 /* requeue=false -->不再重新入队 --> 进关联的死信队列  */
                 //channel.basicNack(envelope.getDeliveryTag(),false,false);
 
-                //channel.basicNack(envelope.getDeliveryTag(),false,true);//重新入队限制 --delivery-limit"
+                /* requeue=true -->重新入队 --> 超过次数delivery-limit --> 进关联的死信队列 */
+                channel.basicNack(envelope.getDeliveryTag(),false,true);//重新入队限制 --delivery-limit"
 
-                //throw new NullPointerException();//消费者无应答会阻塞消息消费
-                channel.basicAck(envelope.getDeliveryTag(),false);
+                //channel.basicAck(envelope.getDeliveryTag(),false);
             }
 
         });

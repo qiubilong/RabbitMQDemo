@@ -9,7 +9,7 @@ import java.io.IOException;
  * @author chenxuegui
  * @since 2025/3/21
  */
-public class TestQuorumQueueConsumer {
+public class TestQuorumQueueConsumer_autoAck {
     static String queue =  "quorum-can-dead";
 
     public static void main(String[] args) throws Exception{
@@ -17,7 +17,7 @@ public class TestQuorumQueueConsumer {
         Channel channel = connection.createChannel();
 
         channel.basicQos(1);//预处理能力
-        channel.basicConsume(queue,false,new DefaultConsumer(channel){ /* 手动ACK -->消息至少消费一次 */
+        channel.basicConsume(queue,true, new DefaultConsumer(channel){ /* 自动ACK --> 最多消费一次 */
 
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
@@ -27,7 +27,6 @@ public class TestQuorumQueueConsumer {
                 System.out.println(properties);
                 System.out.println(new String(body));
 
-                /* 消费者异常，消息者将不再收到新消息*/
                 throw new NullPointerException();
             }
 
