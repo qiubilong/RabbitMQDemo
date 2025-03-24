@@ -27,7 +27,7 @@ public class TestQuorumQueueConsumer {
                 System.out.println(properties);
                 System.out.println(new String(body));
 
-                /* 消费者异常，消息者将不再收到新消息*/
+                /* 消费者异常，消息者将不再收到新消息*/ //--跟spring框架封装的消费者不同
                 throw new NullPointerException();
             }
 

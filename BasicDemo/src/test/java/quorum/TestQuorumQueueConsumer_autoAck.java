@@ -27,7 +27,7 @@ public class TestQuorumQueueConsumer_autoAck {
                 System.out.println(properties);
                 System.out.println(new String(body));
 
-                throw new NullPointerException();
+                throw new NullPointerException(); /* 自动ACK，消息投递时就ack，不管消费者有没异常，消息不会再重新投递（spring框架下的消费者会重新投递） */
             }
 
         });
